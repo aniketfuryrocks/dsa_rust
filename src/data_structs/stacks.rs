@@ -1,5 +1,8 @@
 use core::ptr;
 
+/// Note: This Stack implements unsafe methods, since drop traits has not been implemented its likely to bug out and give undefined behaviour at runtime. Use it at your own risk.
+/// This stack data structure, commits to an array of constant size
+/// Making a stack using a vec of dynamic size makes no sense since the vec struct already provides features of a stack
 pub struct Stack<T> {
     arr: Vec<T>,
     len: usize,
