@@ -29,21 +29,17 @@ impl<T> CircularQueue<T> {
 fn queue_test() {
     unsafe {
         let mut q = CircularQueue::new(5);
-        for i in 0..5 {
-            q.enqueue(i).unwrap();
-        }
-        for i in 0..5 {
-            assert_eq!(q.dequeue().unwrap(), i);
-        }
-        match q.dequeue() {
-            Some(_) => panic!("Should have returned None"),
-            _ => {}
-        }
-        for i in 0..5 {
-            q.enqueue(i).unwrap();
-        }
-        for i in 0..5 {
-            assert_eq!(q.dequeue().unwrap(), i);
+        for _ in 0..2 {
+            for i in 0..5 {
+                q.enqueue(i).unwrap();
+            }
+            for i in 0..5 {
+                assert_eq!(q.dequeue().unwrap(), i);
+            }
+            match q.dequeue() {
+                Some(_) => panic!("Should have returned None"),
+                _ => {}
+            }
         }
     };
 }
