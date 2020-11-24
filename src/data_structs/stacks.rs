@@ -32,6 +32,7 @@ impl<T> Stack<T> {
             Err("Stack Underflow")
         } else {
             self.len -= 1;
+            // though reference can be returned but a naive stack structure returns the value itself
             unsafe {
                 Ok(ptr::read(self.arr.as_ptr().add(self.len)))
             }
