@@ -2,7 +2,7 @@
 Data Structures and Algorithms implemented in rust
 
 Note: 
-1. To prevent code duplication, macros have been heavily used.
-2. I have tried to implement data structures without the use of helper methods built into rust. Due to this u might encounter unsafe code.
+1. To prevent code duplication, macros have been used heavily.
+2. I have tried to implement the data structures without using in built helper methods, due to which u might encounter unsafe code.
 
 # License
