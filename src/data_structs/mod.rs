@@ -1,2 +1,2 @@
 mod stacks;
-mod queue;
+mod queues;

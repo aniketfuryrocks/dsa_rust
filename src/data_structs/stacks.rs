@@ -40,12 +40,14 @@ impl<T> Stack<T> {
 }
 
 #[test]
-unsafe fn stack_test() {
-    let mut stack = Stack::new(20);
-    stack.push(1).unwrap();
-    stack.push(2).unwrap();
-    stack.push(3).unwrap();
-    assert_eq!(stack.pop().unwrap(), 3, "pop");
-    assert_eq!(stack.pop().unwrap(), 2, "pop");
-    assert_eq!(stack.pop().unwrap(), 1, "pop");
+fn stack_test() {
+    unsafe {
+        let mut stack = Stack::new(20);
+        stack.push(1).unwrap();
+        stack.push(2).unwrap();
+        stack.push(3).unwrap();
+        assert_eq!(stack.pop().unwrap(), 3, "pop");
+        assert_eq!(stack.pop().unwrap(), 2, "pop");
+        assert_eq!(stack.pop().unwrap(), 1, "pop");
+    }
 }
