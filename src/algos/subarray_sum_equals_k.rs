@@ -20,7 +20,7 @@ pub fn subarray_sum(nums: Vec<i32>, k: i32) -> i32 {
 }
 
 //O(n)
-// Status: Not working 
+// Status: Not working
 pub fn subarray_sum_using_hash_map(nums: Vec<i32>, k: i32) -> i32 {
     let mut sum = 0;
     let mut map = HashMap::new();
