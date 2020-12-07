@@ -1,3 +1,5 @@
+use std::collections::LinkedList;
+
 type NextNode<T> = Option<Box<Node<T>>>;
 
 struct Node<T> {
@@ -68,6 +70,22 @@ impl<T> SinglyLinkedList<T> {
             cur: Some(&self.head)
         }
     }
+    pub fn get(&self, index: usize) -> Result<&T, &'static str> {
+        let mut k = &self.head;
+        let mut i: usize = 0;
+        loop {
+            let node = k.as_ref().unwrap();
+            if i == index {
+                break Ok(&node.value);
+            }
+            i += 1;
+            if node.next.is_none() {
+                break Err("Index Out of Bounds");
+            } else {
+                k = &node.next;
+            }
+        }
+    }
 }
 
 #[test]
@@ -80,13 +98,8 @@ fn singly_linked_list_test() {
     for x in my_list.iter() {
         println!("{:?}", x);
     }
-    for x in my_list.iter() {
-        println!("{:?}", x);
-    }
-    for x in my_list.iter() {
-        println!("{:?}", x);
-    }
-    for x in my_list.iter() {
-        println!("{:?}", x);
-    }
+    assert_eq!(*my_list.get(0).unwrap(), 2);
+    assert_eq!(*my_list.get(1).unwrap(), 1);
+    assert_eq!(*my_list.get(2).unwrap(), 3);
+    my_list.get(12).expect_err("Index Out of Bounds");
 }
