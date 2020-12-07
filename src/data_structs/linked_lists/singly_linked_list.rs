@@ -1,4 +1,5 @@
 use std::collections::LinkedList;
+use std::f32::consts::E;
 
 type NextNode<T> = Option<Box<Node<T>>>;
 
@@ -72,6 +73,9 @@ impl<T> SinglyLinkedList<T> {
     }
     pub fn get(&self, index: usize) -> Result<&T, &'static str> {
         let mut k = &self.head;
+        if k.is_none() {
+            return Err("Index Out of Bounds");
+        }
         let mut i: usize = 0;
         loop {
             let node = k.as_ref().unwrap();
@@ -86,6 +90,28 @@ impl<T> SinglyLinkedList<T> {
             }
         }
     }
+    pub fn set(&mut self, index: usize, value: T) -> Result<(), &'static str> {
+        if index >= self.size {
+            return Err("Index Out of Bounds");
+        }
+        if index == 0 {
+            return Ok(self.push_front(value));
+        }
+        let mut node = self.head.as_mut().unwrap();
+        //TODO: optimize for tail
+        let mut i: usize = 0;
+        loop {
+            i += 1;
+            if i == index {
+                node.next = Some(Box::new(Node {
+                    next: node.next.take(),
+                    value,
+                }));
+                break Ok(());
+            }
+            node = node.next.as_mut().unwrap();
+        }
+    }
 }
 
 #[test]
@@ -98,8 +124,10 @@ fn singly_linked_list_test() {
     for x in my_list.iter() {
         println!("{:?}", x);
     }
-    assert_eq!(*my_list.get(0).unwrap(), 2);
-    assert_eq!(*my_list.get(1).unwrap(), 1);
-    assert_eq!(*my_list.get(2).unwrap(), 3);
+    my_list.set(0,0);
+    assert_eq!(*my_list.get(0).unwrap(), 0);
+    assert_eq!(*my_list.get(1).unwrap(), 2);
+    assert_eq!(*my_list.get(2).unwrap(), 1);
+    assert_eq!(*my_list.get(3).unwrap(), 3);
     my_list.get(12).expect_err("Index Out of Bounds");
 }
