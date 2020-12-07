@@ -1,3 +1,3 @@
-mod stacks;
-mod queues;
-mod linked_lists;
+pub mod stacks;
+pub mod queues;
+pub mod linked_lists;
