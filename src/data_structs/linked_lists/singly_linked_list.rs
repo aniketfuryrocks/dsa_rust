@@ -97,6 +97,7 @@ impl<T> SinglyLinkedList<T> {
         if index == 0 {
             return Ok(self.push_front(value));
         }
+        self.size += 1;
         let mut node = self.head.as_mut().unwrap();
         //TODO: optimize for tail
         let mut i: usize = 0;
@@ -107,6 +108,29 @@ impl<T> SinglyLinkedList<T> {
                     next: node.next.take(),
                     value,
                 }));
+                break Ok(());
+            }
+            node = node.next.as_mut().unwrap();
+        }
+    }
+
+    pub fn delete(&mut self, index: usize) -> Result<(), &'static str> {
+        if index >= self.size {
+            return Err("Index Out of Bounds");
+        }
+        self.size -= 1;
+        if index == 0 {
+            let node = self.head.take().unwrap();
+            self.head = node.next;
+        }
+        //TODO: optimize for tail
+        let mut node = self.head.as_mut().unwrap();
+        let mut i: usize = 0;
+        loop {
+            i += 1;
+            if i == index {
+                let next_node = node.next.take().unwrap();
+                node.next = next_node.next;
                 break Ok(());
             }
             node = node.next.as_mut().unwrap();
@@ -124,7 +148,7 @@ fn singly_linked_list_test() {
     for x in my_list.iter() {
         println!("{:?}", x);
     }
-    my_list.set(0,0);
+    my_list.set(0, 0);
     assert_eq!(*my_list.get(0).unwrap(), 0);
     assert_eq!(*my_list.get(1).unwrap(), 2);
     assert_eq!(*my_list.get(2).unwrap(), 1);
