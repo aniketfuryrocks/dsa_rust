@@ -9,7 +9,7 @@ impl<T> CircularQueue<T> {
             return Err("Overflow");
         }
         self.arr[self.rear] = item;
-        self.rear = circular_increment!(self.rear,self.arr.len());
+        self.rear = circular_increment!(self.rear, self.arr.len());
         self.size += 1;
         Ok(())
     }
@@ -19,7 +19,7 @@ impl<T> CircularQueue<T> {
             return None;
         }
         let dequeued = ptr::read(self.arr.as_ptr().add(self.front));
-        self.front = circular_increment!(self.front,self.arr.len());
+        self.front = circular_increment!(self.front, self.arr.len());
         self.size -= 1;
         Some(dequeued)
     }
@@ -36,10 +36,10 @@ fn queue_test() {
             for i in 0..5 {
                 assert_eq!(q.dequeue().unwrap(), i);
             }
-            match q.dequeue() {
-                Some(_) => panic!("Should have returned None"),
-                _ => {}
+            if q.dequeue().is_some() {
+                panic!("Should have returned None")
             }
         }
     };
 }
+

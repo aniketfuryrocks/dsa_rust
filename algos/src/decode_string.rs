@@ -11,7 +11,7 @@ fn decrypt(str: &[u8], times: usize) -> (usize, String) {
     loop {
         let c = str[index];
         //check for int
-        if c >= b'0' && c <= b'9' {
+        if (b'0'..=b'9').contains(&c) {
             times_counter = (times_counter * 10) + ((c - b'0') as usize);
             index += 1;
             continue;

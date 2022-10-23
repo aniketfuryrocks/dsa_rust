@@ -37,5 +37,5 @@ macro_rules! queue_struct {
     };
 }
 
-mod circular_queue;
-mod queue;
+pub mod circular_queue;
+pub mod queue;

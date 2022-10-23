@@ -6,7 +6,7 @@ struct Node<T> {
 }
 
 pub struct NodeIter<'a, T> {
-    cur: Option<&'a NextNode<T>>
+    cur: Option<&'a NextNode<T>>,
 }
 
 impl<'a, T> Iterator for NodeIter<'a, T> {
@@ -14,28 +14,23 @@ impl<'a, T> Iterator for NodeIter<'a, T> {
 
     fn next(&mut self) -> Option<Self::Item> {
         match self.cur.unwrap() {
-            None => { None }
+            None => None,
             Some(_) => {
                 let to_return = self.cur.take().unwrap().as_ref();
                 self.cur = Some(&to_return.unwrap().next);
-                return Some(&to_return.unwrap().value);
+                Some(&to_return.unwrap().value)
             }
         }
     }
 }
 
+#[derive(Default)]
 pub struct SinglyLinkedList<T> {
     size: usize,
     head: NextNode<T>,
 }
 
 impl<T> SinglyLinkedList<T> {
-    pub fn new() -> SinglyLinkedList<T> {
-        SinglyLinkedList {
-            size: 0,
-            head: None,
-        }
-    }
     pub fn push_front(&mut self, value: T) {
         self.size += 1;
         self.head = Some(Box::new(Node {
@@ -46,10 +41,7 @@ impl<T> SinglyLinkedList<T> {
     pub fn push_back(&mut self, value: T) {
         self.size += 1;
         let mut k = &mut self.head;
-        let last_node = Some(Box::new(Node {
-            next: None,
-            value,
-        }));
+        let last_node = Some(Box::new(Node { next: None, value }));
         while let Some(node) = k {
             match node.next {
                 None => {
@@ -65,7 +57,7 @@ impl<T> SinglyLinkedList<T> {
     }
     pub fn iter(&self) -> NodeIter<'_, T> {
         NodeIter {
-            cur: Some(&self.head)
+            cur: Some(&self.head),
         }
     }
     pub fn get(&self, index: usize) -> Result<&T, &'static str> {
@@ -92,8 +84,10 @@ impl<T> SinglyLinkedList<T> {
             return Err("Index Out of Bounds");
         }
         if index == 0 {
-            return Ok(self.push_front(value));
+            self.push_front(value);
+            return Ok(());
         }
+
         self.size += 1;
         let mut node = self.head.as_mut().unwrap();
         //TODO: optimize for tail
@@ -138,7 +132,7 @@ impl<T> SinglyLinkedList<T> {
 
 #[test]
 fn singly_linked_list_test() {
-    let mut my_list = SinglyLinkedList::new();
+    let mut my_list = SinglyLinkedList::default();
     my_list.push_front(1);
     my_list.push_front(2);
     my_list.push_back(3);
@@ -146,7 +140,7 @@ fn singly_linked_list_test() {
     for x in my_list.iter() {
         println!("{:?}", x);
     }
-    my_list.insert(0, 0);
+    my_list.insert(0, 0).unwrap();
     my_list.delete(0).unwrap();
     my_list.delete(my_list.size - 1).unwrap();
     assert_eq!(my_list.size, 2);

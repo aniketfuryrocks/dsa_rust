@@ -9,8 +9,6 @@ macro_rules! circular_increment {
     };
 }
 
-mod algos;
-mod data_structs;
-
-fn main() {
-}
+pub mod stacks;
+pub mod queues;
+pub mod linked_lists;

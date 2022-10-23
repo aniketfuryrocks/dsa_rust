@@ -28,6 +28,7 @@ impl<T> Stack<T> {
             Ok(())
         }
     }
+
     pub unsafe fn pop(&mut self) -> Result<T, &'static str> {
         if self.len == 0 {
             Err("Stack Underflow")
@@ -51,3 +52,4 @@ fn stack_test() {
         assert_eq!(stack.pop().unwrap(), 1, "pop");
     }
 }
+

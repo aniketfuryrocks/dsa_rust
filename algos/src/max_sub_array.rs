@@ -28,7 +28,7 @@ fn merge<T: Copy + PartialOrd>(x1: &[T], x2: &[T], y: &mut [T]) {
     }
 }
 
-fn merge_sort<T: Copy + Ord>(x: &mut [T]) {
+pub fn merge_sort<T: Copy + Ord>(x: &mut [T]) {
     let n = x.len();
     let m = n / 2;
 
@@ -46,7 +46,7 @@ fn merge_sort<T: Copy + Ord>(x: &mut [T]) {
     x.copy_from_slice(&y);
 }
 
-fn max_sub_array(_arr: Vec<i32>) -> i32 {
+pub fn max_sub_array(_arr: Vec<i32>) -> i32 {
     return 0;
 }
 
@@ -71,3 +71,4 @@ fn max_sub_array_test1() {
     merge_sort(&mut strings);
     println!("After:  {:?}\n", strings);
 }
+
