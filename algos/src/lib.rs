@@ -1,6 +1,7 @@
 pub mod decode_string;
 pub mod max_sub_array;
 pub mod subarray_sum_equals_k;
+pub mod generate_parens;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
